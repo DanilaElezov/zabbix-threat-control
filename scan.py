@@ -94,7 +94,7 @@ def os_data_valid(os, version, packages, host_name):
     except Exception as e:
         logger.warning('Excluded {}. Exception: {}'.format(host_name, e))
         return False
-    logger.info('Excluded {}. ОS: {}, Version: {}, Packages: {}'.format(host_name, os, version, len(packages)))
+    logger.info('Excluded {}. OS: {}, Version: {}, Packages: {}'.format(host_name, os, version, len(packages)))
     return False
 
 
@@ -223,7 +223,7 @@ if len(h_matrix) == 0:
     logger.info('There are no data in the host-matrix for further processing. Exit')
     exit()
 
-logger.info('Сreating an additional field in the host-matrix based on data from Vulners')
+logger.info('Creating an additional field in the host-matrix based on data from Vulners')
 # формируем доп-поля в матрице на основе данных от вулнерса
 current_host = 0
 for h in h_matrix:
@@ -277,7 +277,7 @@ logger.info('Processed hosts: {}'.format(current_host))
 f = open(zsender_data_file, 'w')
 f_lld = open(zsender_lld_file, 'w')
 
-logger.info('Сreating an LLD-data: CVSS-Scores and Cumulative-Fix commands')
+logger.info('Creating an LLD-data: CVSS-Scores and Cumulative-Fix commands')
 current_host = 0
 discovery_hosts = list()
 for h in h_matrix:
@@ -344,7 +344,7 @@ logger.info('Unique vulnerable packages processed: {}'.format(len(pkg_matrix)))
 
 
 # формируем пакет LLD-данных
-logger.info('Сreating an LLD-data for package monitoring')
+logger.info('Creating an LLD-data for package monitoring')
 
 discovery_pkg = list()
 # для каждого бюллетеня (строки) в матрице бюллетеней строим LLD-json c кол-вом хостов, именем, баллами, влиянием
@@ -417,7 +417,7 @@ b_matrix = uniq_list(full_bulletins_lst)
 logger.info('Unique security bulletins processed: {}'.format(len(b_matrix)))
 
 # формируем пакет LLD-данных
-logger.info('Сreating an LLD-data for bulletin monitoring')
+logger.info('Creating an LLD-data for bulletin monitoring')
 
 discovery_data = list()
 # для каждого бюллетеня (строки) в матрице бюллетеней строим LLD-json c кол-вом хостов, именем, баллами, влиянием
@@ -442,7 +442,7 @@ discovery_json = (json.dumps({'data': discovery_data})).replace(': ', ':').repla
 
 f_lld.write('\"{}\" vulners.bulletins_lld {}\n'.format(zbx_h_bulls, discovery_json))
 
-logger.info('Сreating an CVSS Score-based host-lists')
+logger.info('Creating an CVSS Score-based host-lists')
 score_list = list()
 
 host_count_table = dict((score_value, 0) for score_value in range(0, 11))
@@ -455,7 +455,7 @@ for h in h_matrix:
 if len(score_list) == 0:
     score_list = [0]
 
-logger.info('Сreating an aggregated data')
+logger.info('Creating an aggregated data')
 # считаем аггрегированыне метрики и пишем их в файл
 agg_score_median = median(map(float, score_list))
 agg_score_mean = mean(map(float, score_list))
